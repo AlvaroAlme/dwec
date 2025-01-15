@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Actividad_dwec3.7</title>
+  </head>
+  <body>
+    <div id="contenedor-chistes"></div>
+
+    <script>
+      const template = document.createElement("template");
+      template.innerHTML = `
+      <style>
+        .chiste {
+          font-family: Arial, sans-serif;
+          margin: 10px 0;
+          padding: 10px;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+          background-color: #f9f9f9;
+        }
+        button {
+          margin-top: 5px;
+          padding: 5px 10px;
+          cursor: pointer;
+        }
+      </style>
+      <div class="chiste">
+        <p class="enunciado"></p>
+        <button>Ver respuesta</button>
+      </div>
+    `;
+
+      class MiChiste extends HTMLElement {
+        constructor() {
+          super();
+
+          this.attachShadow({ mode: "open" });
+
+          this.shadowRoot.appendChild(template.content.cloneNode(true));
+
+          this.enunciadoEl = this.shadowRoot.querySelector(".enunciado");
+          this.boton = this.shadowRoot.querySelector("button");
+
+          this.boton.addEventListener("click", () => {
+            alert(this.respuesta);
+          });
+        }
+
+        connectedCallback() {
+          this.enunciadoEl.textContent = this.getAttribute("enunciado");
+          this.respuesta = this.getAttribute("respuesta");
+        }
+      }
+
+      customElements.define("mi-chiste", MiChiste);
+
+      const chistes = [
+        {
+          enunciado: "¿Por qué los pájaros no usan Facebook?",
+          respuesta: "Porque ya tienen Twitter.",
+        },
+        {
+          enunciado: "¿Cómo se despiden los químicos?",
+          respuesta: "Ácido un placer.",
+        },
+        {
+          enunciado: "¿Por qué los programadores odian el verano?",
+          respuesta: "Porque hace mucho calor en los bucles.",
+        },
+      ];
+
+      const container = document.getElementById("chistes-container");
+      chistes.forEach((chiste) => {
+        const miChiste = document.createElement("mi-chiste");
+        miChiste.setAttribute("enunciado", chiste.enunciado);
+        miChiste.setAttribute("respuesta", chiste.respuesta);
+        container.appendChild(miChiste);
+      });
+    </script>
+  </body>
+</html>

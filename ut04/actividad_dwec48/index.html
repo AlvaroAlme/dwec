@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Usuarios</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const controller = new AbortController();
+            const signal = controller.signal;
+
+            
+            const timeout = setTimeout(() => {
+                controller.abort();
+                console.error('La petición tardó demasiado y fue cancelada.');
+            }, 5000);
+
+           
+            fetch('usuarios.json', { signal })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error en la respuesta de la petición.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    clearTimeout(timeout); 
+                    data.forEach(usuario => {
+                        console.log(`Usuario: ${usuario.apellidos}, ${usuario.nombre}.`);
+                    });
+                })
+                .catch(error => {
+                    if (error.name === 'AbortError') {
+                        console.error('La petición fue abortada.');
+                    } else {
+                        console.error('Error en la petición:', error);
+                    }
+                });
+        });
+    </script>
+</head>
+<body>
+    <h1>Consulta de Usuarios</h1>
+    <p>Abre la consola para ver el resultado de la petición.</p>
+</body>
+</html>

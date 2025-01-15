@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Actividad DWEC 4.1</title>
+        <style>
+            #timer{
+                font-size: 30px;
+                margin:20px;
+            }
+            button{
+                font-size: 20px;
+                margin:5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="timer">0</div>
+        <button id="startStopButton">Iniciar</button>
+        <button id="resetButton">Resetear temporizador</button>
+
+        <script>
+            let timer = 0;
+            let timerId = null;
+            let isRunning = false;
+
+            const tiemrDisplay = document.getElementById("timer");
+            const startStopButton = document.getElementById("startStopButton");
+            const resetButton = document.getElementById("resetButton");
+
+            function updateTimer(){
+                timer++;
+                timerDisplay.textContent = timer;
+            }
+
+            function toggleTimer(){
+                if(isRunning){
+                    clearInterval(timerId);
+                    startStopButton.textContent = "Iniciar";
+                }else{
+                    timerId = setInterval(updateTimer, 1000);
+                    startStopButton.textContent = "Deterner";
+                }
+                isRunning = !isRunning;
+            }
+
+            function resetTimer(){
+                clearInterval(timerId);
+                timer = 0;
+                timerDisplay.textContent = timer;
+                startStopButton.textContent = "Inicar";
+                isRunning = false;
+            }
+
+            startStopButton.addEventListener("click", toggleTimer);
+            resetButton.addEventListener("click", resetTimer);
+
+        </script>
+    </body>
+</html>

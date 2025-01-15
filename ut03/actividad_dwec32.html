@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Actividad_dwec3.2</title>
+    <style>
+      .item {
+        width: 100px;
+        height: 50px;
+        margin: 5px;
+        background-color: lightgray;
+        display: inline-block;
+        text-align: center;
+        line-height: 50px;
+        font-weight: bold;
+      }
+      .activado {
+        background-color: lightgreen;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Conmutar la clase "activado"</h1>
+
+    <div class="item">1</div>
+    <div class="item activado">2</div>
+    <div class="item">3</div>
+    <div class="item activado">4</div>
+    <div class="item">5</div>
+
+    <button onclick="toggleActivado()">Conmutar clase "activado"</button>
+
+    <script>
+      function toggleActivado() {
+        const items = document.querySelectorAll(".item");
+
+        items.forEach((item) => {
+          item.classList.toggle("activado");
+        });
+      }
+    </script>
+  </body>
+</html>

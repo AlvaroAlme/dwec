@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Actividad_dwec3.3</title>
+    <style>
+      .chiste {
+        margin: 10px 0;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        width: fit-content;
+      }
+      .chiste button {
+        margin-top: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Chistes de Programación</h1>
+
+    <div id="contenedor-chistes"></div>
+
+    <script>
+      let chistes = [
+        {
+          enunciado: "¿Qué le dice un bit a otro?",
+          respuesta: "Nos vemos en el bus.",
+        },
+        { enunciado: "¿Qué es un terapeuta?", respuesta: "1024 GigaPeutas." },
+        {
+          enunciado:
+            "¿Cuántos programadores hacen falta para cambiar una bombilla?",
+          respuesta: "Ninguno, porque es un problema de hardware.",
+        },
+      ];
+
+      const contenedor = document.getElementById("contenedor-chistes");
+
+      function mostrarRespuesta(respuesta) {
+        alert(respuesta);
+      }
+
+      chistes.forEach((chiste, index) => {
+        const divChiste = document.createElement("div");
+        divChiste.classList.add("chiste");
+
+        const enunciado = document.createElement("p");
+        enunciado.textContent = chiste.enunciado;
+
+        const boton = document.createElement("button");
+        boton.textContent = "Ver respuesta";
+
+        boton.addEventListener("click", () => {
+          mostrarRespuesta(chiste.respuesta);
+        });
+
+        divChiste.appendChild(enunciado);
+        divChiste.appendChild(boton);
+
+        contenedor.appendChild(divChiste);
+      });
+    </script>
+  </body>
+</html>

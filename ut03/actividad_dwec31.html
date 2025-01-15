@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Actividad_dwec3.1</title>
+  </head>
+  <body>
+    <script>
+      const tarjeta = document.createElement("div");
+      tarjeta.classList.add("tarjeta");
+
+      const tarjetaTitulo = document.createElement("div");
+      tarjetaTitulo.classList.add("tarjeta-titulo");
+
+      const titulo = document.createElement("h2");
+      titulo.textContent = "Datos de contacto";
+      tarjetaTitulo.appendChild(titulo);
+
+      tarjeta.appendChild(tarjetaTitulo);
+
+      const tarjetaCuerpo = document.createElement("div");
+      tarjetaCuerpo.classList.add("tarjeta-cuerpo");
+
+      const nombre = document.createElement("p");
+      nombre.classList.add("tarjeta-nombre");
+      const spanNombre = document.createElement("span");
+      spanNombre.classList.add("negrita");
+      spanNombre.textContent = "Nombre:";
+      nombre.appendChild(spanNombre);
+      nombre.appendChild(document.createTextNode(" Laura Pérez"));
+
+      const email = document.createElement("p");
+      email.classList.add("tarjeta-email");
+      const spanEmail = document.createElement("span");
+      spanEmail.classList.add("negrita");
+      spanEmail.textContent = "Email:";
+      email.appendChild(spanEmail);
+      email.appendChild(document.createTextNode(" laura@noexiste.com"));
+
+      const telefono = document.createElement("p");
+      telefono.classList.add("tarjeta-telefono");
+      const spanTelefono = document.createElement("span");
+      spanTelefono.classList.add("negrita");
+      spanTelefono.textContent = "Teléfono:";
+      telefono.appendChild(spanTelefono);
+      telefono.appendChild(document.createTextNode(" 612123123"));
+
+      tarjetaCuerpo.appendChild(nombre);
+      tarjetaCuerpo.appendChild(email);
+      tarjetaCuerpo.appendChild(telefono);
+
+      tarjeta.appendChild(tarjetaCuerpo);
+
+      document.body.appendChild(tarjeta);
+    </script>
+  </body>
+</html>

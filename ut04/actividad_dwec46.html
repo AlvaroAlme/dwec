@@ -1,0 +1,45 @@
+<!--Transforma el código del ejemplo estudiado en la sección Un ejemplo: API Media Devices del Apartado 2 para que utilice async/await en lugar de promesas.-->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Actividad DWEC 4.6</title>
+</head>
+
+<body>
+
+	<video autoplay id="videoDisplay" src=""></video>
+
+	<div id="errorDisplay"></div>
+
+	<script type="module">
+		// Definición de la función asíncrona para manejar getUserMedia
+		async function iniciarCaptura() {
+			const videoDisplay = document.getElementById("videoDisplay");
+			const errorDisplay = document.getElementById("errorDisplay");
+
+			// Opciones de captura
+			const opciones = {
+				audio: false,
+				video: true
+			};
+
+			try {
+				// Intentar obtener acceso a la cámara
+				const stream = await navigator.mediaDevices.getUserMedia(opciones);
+				// Mostramos el vídeo en el elemento <video>
+				videoDisplay.srcObject = stream;
+			} catch (error) {
+				// Manejar el error
+				errorDisplay.innerHTML = `Error: ${error.message}`;
+			}
+		}
+
+		// Iniciar la captura al cargar la página
+		iniciarCaptura();
+	</script>
+</body>
+
+</html>

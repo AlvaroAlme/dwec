@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Actividad_dwec3.8</title>
+  </head>
+  <body>
+    <template id="mi-contador">
+      <style>
+        button {
+          padding: 1em;
+          border-radius: 1em;
+          font-size: 1em;
+        }
+      </style>
+      <button></button>
+    </template>
+
+    <script>
+      class MiContador extends HTMLElement {
+        constructor() {
+          super();
+          this.cuenta = 0;
+        }
+
+        contar() {
+          this.cuenta++;
+        }
+
+        connectedCallback() {
+          const shadow = this.attachShadow({ mode: "open" });
+
+          const plantilla = document.getElementById("mi-contador");
+          const plantillaContenido = plantilla.content;
+
+          shadow.append(plantillaContenido.cloneNode(true));
+
+          const boton = shadow.querySelector("button");
+
+          const valorInicial = this.getAttribute("iniciar");
+          this.cuenta = valorInicial ? parseInt(valorInicial) : 0;
+
+          boton.textContent = this.cuenta;
+
+          boton.addEventListener("click", () => {
+            this.contar();
+            boton.textContent = this.cuenta;
+          });
+        }
+      }
+
+      customElements.define("mi-contador", MiContador);
+    </script>
+
+    <mi-contador iniciar="5"></mi-contador>
+    <mi-contador iniciar="10"></mi-contador>
+    <mi-contador></mi-contador>
+
+    <button>Botón normal</button>
+  </body>
+</html>

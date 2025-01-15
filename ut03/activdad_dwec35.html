@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Actividad_dwec3.5</title>
+  </head>
+  <body>
+    <h1>Formulario de Validación de NIF/NIE</h1>
+
+    <form id="formulario" onsubmit="return validarFormulario()">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" required />
+      <br /><br />
+
+      <label for="apellidos">Apellidos:</label>
+      <input type="text" id="apellidos" name="apellidos" required />
+      <br /><br />
+
+      <label for="nif">NIF/NIE:</label>
+      <input
+        type="text"
+        id="nif"
+        name="nif"
+        required
+        pattern="[XYZ0-9][0-9]{7}[A-Z]"
+      />
+      <br /><br />
+
+      <button type="submit">Enviar</button>
+    </form>
+
+    <script>
+      function comprobarNifNie(nif) {
+        var letras = [
+          "T",
+          "R",
+          "W",
+          "A",
+          "G",
+          "M",
+          "Y",
+          "F",
+          "P",
+          "D",
+          "X",
+          "B",
+          "N",
+          "J",
+          "Z",
+          "S",
+          "Q",
+          "V",
+          "H",
+          "L",
+          "C",
+          "K",
+          "E",
+          "T",
+        ];
+
+        let nifMay = nif.toUpperCase();
+
+        let primeraLetra = nifMay.substr(0, 1);
+
+        let letraNIF = nifMay.substring(8, 9);
+
+        let numNIF;
+
+        if (isNaN(primeraLetra)) {
+          switch (primeraLetra) {
+            case "X":
+              numNIF = "0";
+              break;
+            case "Y":
+              numNIF = "1";
+              break;
+            case "Z":
+              numNIF = "2";
+              break;
+            default:
+              return false;
+          }
+          numNIF += nifMay.substring(1, 8);
+        } else {
+          numNIF = nifMay.substring(0, 8);
+        }
+
+        numNIF = parseInt(numNIF);
+
+        let letraCalculada = letras[numNIF % 23];
+
+        return letraCalculada === letraNIF;
+      }
+
+      function validarFormulario() {
+        const nif = document.getElementById("nif").value;
+
+        if (!comprobarNifNie(nif)) {
+          alert("El NIF/NIE introducido no es válido. Por favor, revísalo.");
+          return false;
+        }
+
+        return true;
+      }
+    </script>
+  </body>
+</html>

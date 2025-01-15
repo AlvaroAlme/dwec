@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Actividad_dwec3.12</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 50px;
+      }
+      label,
+      input,
+      button {
+        display: block;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Preferencia de Idioma</h1>
+    <p>Por favor, selecciona tu idioma preferido:</p>
+
+    <form id="idiomaForm">
+      <label for="idioma">Idioma:</label>
+      <input
+        type="text"
+        id="idioma"
+        name="idioma"
+        placeholder="Ingresa tu idioma preferido"
+      />
+      <button type="submit">Guardar Preferencia</button>
+    </form>
+
+    <script>
+      function cargarPreferenciaIdioma() {
+        const idioma = localStorage.getItem("idioma") || "castellano";
+
+        document.getElementById("idioma").value = idioma;
+      }
+
+      function guardarPreferenciaIdioma(event) {
+        event.preventDefault();
+        const idioma = document.getElementById("idioma").value;
+
+        localStorage.setItem("idioma", idioma);
+        alert(`Idioma guardado como: ${idioma}`);
+      }
+
+      window.addEventListener("load", cargarPreferenciaIdioma);
+
+      document
+        .getElementById("idiomaForm")
+        .addEventListener("submit", guardarPreferenciaIdioma);
+    </script>
+  </body>
+</html>
