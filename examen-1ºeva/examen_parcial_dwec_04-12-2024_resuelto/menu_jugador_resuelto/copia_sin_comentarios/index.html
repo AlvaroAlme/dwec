@@ -1,0 +1,112 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Selección de Jugador</title>
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+        <style>
+            .avatar {
+                width: 150px;
+                height: auto;
+                margin: 10px;
+                cursor: pointer;
+            }
+            .avatar-container {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+            }
+            h1 {
+                margin-bottom: 20px;
+                font-family: 'Press Start 2P', cursive;
+                color: #FFD700;
+                text-align: center;
+            }
+            .nocturno {
+                background-color: black;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+
+        <night-mode-button></night-mode-button>
+       
+        <script type="module">
+
+            import { Barbaro, Elfo, Mago } from './jugadores.js';
+
+            const barbaro = new Barbaro();
+            const elfo = new Elfo();
+            const mago = new Mago();
+
+            const h1 = document.createElement('h1');
+            h1.textContent = 'Selecciona un jugador:';
+            document.body.append(h1);
+
+            const avatarContainer = document.createElement('div');
+            avatarContainer.classList.add('avatar-container');
+
+            const avatarBarbaro = document.createElement('img');
+            avatarBarbaro.src = 'avatar_barbaro.png';
+            avatarBarbaro.classList.add('avatar');
+            avatarBarbaro.id = 'avatarBarbaro';
+            avatarContainer.append(avatarBarbaro);
+
+            const avatarElfo = document.createElement('img');
+            avatarElfo.src = 'avatar_elfo.png';
+            avatarElfo.classList.add('avatar');
+            avatarElfo.id = 'avatarElfo';
+            avatarContainer.append(avatarElfo);
+
+            const avatarMago = document.createElement('img');
+            avatarMago.src = 'avatar_mago.png';
+            avatarMago.classList.add('avatar');
+            avatarMago.id = 'avatarMago';                      
+            avatarContainer.append(avatarMago);
+
+            document.body.append(avatarContainer);
+
+            avatarBarbaro.addEventListener('click', () => {
+                alert(barbaro.equipar());
+            });
+
+            avatarElfo.addEventListener('click', () => {
+                alert(elfo.equipar());
+            });
+
+            avatarMago.addEventListener('click', () => {
+                alert(mago.equipar());
+            });
+
+            class NightModeButton extends HTMLElement {
+
+                constructor(){
+                    super();
+                }
+
+                connectedCallback() {
+
+                    const button = document.createElement('button');
+                    button.textContent = 'Modo nocturno: off';
+
+                    button.addEventListener('click', () => {
+                        const isNightMode = document.body.classList.toggle('nocturno');
+                        button.textContent = isNightMode ? 'Modo nocturno: on' : 'Modo nocturno: off';
+                    });
+
+                    this.attachShadow({ mode: 'open' });
+                    this.shadowRoot.append(button);
+                }
+            }
+
+            customElements.define('night-mode-button', NightModeButton);
+
+            //const nightModeButton = document.createElement('night-mode-button');
+            //document.body.append(nightModeButton);
+
+        </script>
+    </body>
+</html>

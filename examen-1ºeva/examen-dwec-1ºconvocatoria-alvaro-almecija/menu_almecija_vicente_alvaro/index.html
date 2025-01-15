@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú de Jugadores</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        /* Estilo para las imágenes de los jugadores */
+        .avatar {
+            width: 150px;
+            height: auto;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .avatar-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-family: 'Press Start 2P', cursive; /* Fuente estilo arcade */
+            color: #FFD700; /* Amarillo oro */
+            text-align: center;
+        }
+        .nocturno {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    
+    <button id="boton" src="">Pulsa la imagen</button>
+    <script type="module">//<-- Modifica esta etiqueta si te es necesario
+        import * as jugadores from "./jugadores.js";
+        import * as dialogos from "./dialogos.js";
+
+        let elfo1 = new Elfo("ballesta")
+        let barbaro1 = new Barbaro("mandoble")
+
+        
+        //TO DO
+
+        const texto = document.createElement("h1");
+        texto.textContent = "Selecciona un jugador"
+
+        const contenedorAvatar = document.createElement("div");
+        contenedorAvatar.classList.add("avatar-container");
+
+        const avatarBarbaro = document.createElement("div");
+        avatarBarbaro.classList.add("avatar");
+        avatarBarbaro.append(document.createElement(src= "./avatar_barbaro.png")),
+        avatarBarbaro.append(contenedorAvatar);
+
+        const avatarElfo = document.createElement("div");
+        avatarElfo.classList.add("avatar");
+        avatarElfo.append(document.createElement(src= "./avatar_elfo.png")),
+        avatarElfo.append(contenedorAvatar);
+
+        function alerta(addEventListener){
+            
+        }
+        let boton = document.getElementById("boton");
+        boton.addEventListener("click",)
+
+    </script>
+</body>
+</html>

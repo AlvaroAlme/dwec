@@ -1,0 +1,149 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Selección de Jugador</title>
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+        <style>
+            .avatar {
+                width: 150px;
+                height: auto;
+                margin: 10px;
+                cursor: pointer;
+            }
+            .avatar-container {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+            }
+            h1 {
+                margin-bottom: 20px;
+                font-family: 'Press Start 2P', cursive;
+                color: #FFD700;
+                text-align: center;
+            }
+            .nocturno {
+                background-color: black;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+
+        <night-mode-button></night-mode-button>
+        <!-- ↑↑↑ E4: "...añade a index.html el componente web <night-mode-button>.
+        (...) Puedes añadir tu componente web al principio o al final del <body>, es indiferente.
+        (...) Puedes añadir tu componente web de manera declarativa, utilizando directamente la etiqueta <night-mode-button>;
+        o puedes hacerlo programáticamente mediante las funciones del DOM, es indiferente."
+        (En este caso se ha añadido al principio y de forma declarativa. Se puede comentar esta línea,
+        y descomentar las 2 últimas del script para ver el ejemplo al final y de forma programática)  -->
+
+        <!-- ↓↓↓ E3: "Abre el archivo index.html e introduce en la etiqueta <script> la siguiente funcionalidad:" -->
+        <script type="module">
+            //↑↑↑ E3: "Importa correctamente los objetos de jugadores.js" En la línea superior se incluye type="module";
+            //↓↓↓ En la línea inferior se realiza el import; y en jugadores.js (o jugadoresAlt.js) se realiza el export.
+            import { Barbaro, Elfo, Mago } from './jugadores.js';
+
+            //↓↓↓ E3: "Crea una instancia de cada tipo de jugador."
+            const barbaro = new Barbaro();
+            const elfo = new Elfo();
+            const mago = new Mago();  //← E5: "Añade a la aplicación un nuevo tipo de jugador llamado Mago."
+
+            /* 
+            *  E3: "Utiliza las funciones del DOM para crear desde JavaScript el siguiente código HTML dentro del <body>.
+            *  No esta permitido usar las funciones innerHTML y outerHTML.
+            *
+            *  <h1>Selecciona un jugador:</h1>
+            *  <div class="avatar-container">
+            *      <img src="avatar_barbaro.png" class="avatar" id="avatarBarbaro">
+            *      <img src="avatar_elfo.png" class="avatar" id="avatarElfo">
+            *  </div>
+            *  ↓↓↓
+            */
+            const h1 = document.createElement('h1');
+            h1.textContent = 'Selecciona un jugador:';
+            document.body.append(h1);
+
+            const avatarContainer = document.createElement('div');
+            avatarContainer.classList.add('avatar-container');
+
+            const avatarBarbaro = document.createElement('img');
+            avatarBarbaro.src = 'avatar_barbaro.png';
+            avatarBarbaro.classList.add('avatar');
+            avatarBarbaro.id = 'avatarBarbaro';
+            avatarContainer.append(avatarBarbaro);
+
+            const avatarElfo = document.createElement('img');
+            avatarElfo.src = 'avatar_elfo.png';
+            avatarElfo.classList.add('avatar');
+            avatarElfo.id = 'avatarElfo';
+            avatarContainer.append(avatarElfo);
+
+            const avatarMago = document.createElement('img');  //← E5: "Añade a la aplicación un nuevo tipo de jugador llamado Mago."
+            avatarMago.src = 'avatar_mago.png';                //  Añadimos el código necesario para que se incluya en el HTML:
+            avatarMago.classList.add('avatar');                //  <img src="avatar_mago.png" class="avatar" id="avatarMago">
+            avatarMago.id = 'avatarMago';                      //
+            avatarContainer.append(avatarMago);                //
+
+            document.body.append(avatarContainer);
+
+            //↓↓↓ E3: "Añade la funcionalidad para que cada vez que se haga clic encima de la imagen de un personaje se muestre un alert con el dialogo de ese personaje."
+            avatarBarbaro.addEventListener('click', () => {
+                alert(barbaro.equipar());
+            });
+
+            avatarElfo.addEventListener('click', () => {
+                alert(elfo.equipar());
+            });
+
+            avatarMago.addEventListener('click', () => {  //← E5: "Añade a la aplicación un nuevo tipo de jugador llamado Mago."
+                alert(mago.equipar());
+            });
+
+            //↓↓↓ E4: "Crea (...) el componente web <night-mode-button>.
+            class NightModeButton extends HTMLElement {
+
+                constructor(){
+                    super();
+                }
+
+                connectedCallback() {
+
+                    const button = document.createElement('button');  //← E4: "Dicho componente web consta de un botón
+                    button.textContent = 'Modo nocturno: off';        //  con el texto Modo nocturno: off."
+
+                    // Añadir el EventListener para alternar el modo nocturno
+                    button.addEventListener('click', () => {
+                        const isNightMode = document.body.classList.toggle('nocturno');  /* ← E4: "Que el fondo alterne entre negro y blanco
+                                                                                          * se consigue haciendo que la etiqueta <body> pertenezca o no a la clase nocturno.
+                                                                                          * En función de esto se aplican unos estilos u otros que ya están implementados."
+                                                                                          * (mirar el selector .nocturno más arriba)
+                                                                                          */ 
+                        button.textContent = isNightMode ? 'Modo nocturno: on' : 'Modo nocturno: off'; /* ← E4: "Cuando se pulsa el fondo de la web pasa a color negro,
+                                                                                                        * y en el botón pasa a poner Modo nocturno: on.
+                                                                                                        * Si se vuelve a pulsar recupera su texto original"
+                                                                                                        */
+                    });
+
+                    this.attachShadow({ mode: 'open' });  //← E4: "El componente web debe hacer uso Shadow DOM."
+                    this.shadowRoot.append(button);
+                }
+            }
+
+            customElements.define('night-mode-button', NightModeButton);
+
+            //const nightModeButton = document.createElement('night-mode-button');
+            //document.body.append(nightModeButton);
+            /* ↑↑↑ E4: "...añade a index.html el componente web <night-mode-button>.
+             * (...) Puedes añadir tu componente web al principio o al final del <body>, es indiferente.
+             * (...) Puedes añadir tu componente web de manera declarativa, utilizando directamente la etiqueta <night-mode-button>;
+             * o puedes hacerlo programáticamente mediante las funciones del DOM, es indiferente."
+             * (En este caso se ha añadido al final y de forma programática. Se puede comentar esta línea,
+             * y descomentar la primera despues de <body> para ver el ejemplo al principio y de forma declarativa)  
+             */
+
+        </script>
+    </body>
+</html>
