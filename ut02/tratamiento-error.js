@@ -1,3 +1,5 @@
+//tratamiento de error, añadimos un try-catch para capturar el error
+
 function procesar(mensaje){
 
     try{

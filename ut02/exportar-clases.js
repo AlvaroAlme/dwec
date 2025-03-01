@@ -1,4 +1,4 @@
-
+//exporta las clases
 export class Enemigo {
     constructor() {
       this.energia = 10;

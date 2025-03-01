@@ -1,4 +1,4 @@
-function calcularMedia(numeros) {
+function calcularMedia(numeros) { //la funcion guarda un conjunto de numeros
     
     if (numeros.length === 0) return 0;
 
