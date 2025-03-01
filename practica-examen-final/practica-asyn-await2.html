@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>MediaDevices API</title>
+</head>
+
+<body>
+
+	<video autoplay id="videoDisplay" src=""></video>
+
+	<div id="errorDisplay"></div>
+
+	<script>
+		var videoDisplay = document.getElementById("videoDisplay");
+		var errorDisplay = document.getElementById("errorDisplay");
+
+		// Opciones de captura
+		var opciones = {
+			audio: false,
+			video: true
+		};
+        //Si hay error o quiero manejar el error, debo meter un try-catch, para que await
+        async function miFuncion() {
+            try{
+            let resultado = await navigator.mediaDevices.getUserMedia(opciones);
+            videoDisplay.srcObject = resultado;
+            } catch (error){
+                errorDisplay.innerHTML = `Error ${error.message}`;
+            }
+        }
+        /*
+		// Devuelve una promesa
+		navigator.mediaDevices.getUserMedia(opciones)
+			.then(function (stream) {
+				// Mostramos el vídeo en el elemento <video>
+				videoDisplay.srcObject = stream;
+			})
+			.catch(function (error) {
+				errorDisplay.innerHTML = `Error ${error.message}`;
+			});*/
+	</script>
+</body>
+
+</html>

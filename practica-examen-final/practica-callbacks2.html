@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title></title>
+</head>
+
+<body>
+    <script>
+        let temporizador = { //se trata de arreglar el codigo, las funciones crean un "this" del objeto que la haya llamado, en este caso temporizador
+            cuentaAtras() { //las funciones flecha no generan ningun "this" por lo tango cogen de lo que haya por arriba
+                setTimeout(() => { //pero si por encima tiene otra funcion flecha, nunca se genera ningun this.
+                    console.log(`Ha terminado el temporizador de ${this.tiempo} ms.`);//el resultado correcto es generar primero una funcion normal, y luego una flecha.
+                }, this.tiempo);
+            }
+        };
+        temporizador.tiempo = 2000;
+        temporizador.cuentaAtras();
+    </script>
+</body>
+
+</html>

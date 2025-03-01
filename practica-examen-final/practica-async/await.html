@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <script>
+            function temporizador(tiempo){
+                return new Promise(function(resolver,rechazar){
+                    setTimeout(() => {
+                        console.log(`El temporizador de ${tiempo}ms ha terminado`);
+                        resolver(tiempo);
+                    }, tiempo)
+                });
+            }
+            //creo una funcion asincrona donde lanzo todas las promesas 
+            async function promesasParalelo(){
+            //lanzo las 3 promesas a la vez
+            let temp = temporizador(3000);
+            let temp2 = temporizador(2000);
+            let temp3 = temporizador(1000);
+
+            //las guardo en una constante
+            //Promise.all junta todas las promesas en una
+            //await para esperar a que finalice
+            //const resultados = await Promise.all([temp, temp2, temp3]);
+            Promise.all([temp, temp2, temp3]).then((resultados) => {
+                console.log(`Los tiempos son ${resultados}`);
+            });
+            //console.log(`Los tiempos son ${resultados}`);
+            }
+
+            promesasParalelo();
+
+            
+            
+         
+        </script>
+    </body>
+</html>

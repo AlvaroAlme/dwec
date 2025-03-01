@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title></title>
+</head>
+
+<body>
+    <script>
+        function temporizador(tiempo) {
+            return new Promise(function (resolver, rechazar) {
+                setTimeout(function () {
+                    resolver(`Temporizador de ${tiempo} ms terminado`);
+                }, tiempo);
+            });
+        }
+        let resultado = temporizador(3000)
+        resultado.then(() => {
+            console.log(`El valor que devuelve el temporizador es: ${resultado}.`);
+        }).catch(() => {
+            console.log("Ha habido un error");
+        });
+
+        
+    </script>
+</body>
+
+</html>

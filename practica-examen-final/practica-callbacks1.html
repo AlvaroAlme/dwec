@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>practica-examen</title>
+</head>
+
+<body>
+    <div id="contador">
+        0
+    </div>
+
+    <input type="button" id="boton" onclick="inciarContador()" value="Empezar">
+    <script>
+        let temp;
+
+        function sumarContador() {
+            document.getElementById("contador").innerHTML++;
+        }
+        function inciarContador() {
+
+
+            if (document.getElementById("boton").getAttribute("value") === "Empezar") {
+                temp = setInterval(sumarContador, 1000);
+                document.getElementById("boton").setAttribute("value", "Parar");
+            } else {
+                clearInterval(temp);
+                document.getElementById("boton").setAttribute("value", "Empezar");
+            }
+        }
+
+
+
+
+    </script>
+</body>
+
+</html>

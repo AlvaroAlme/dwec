@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <script>
+            function temporizador(tiempo){
+                return new Promise(function(resolver, rechazar){
+                    let id = setTimeout(resolver, tiempo);
+                    if(id < 0) {
+                        rechazar();
+                    }
+                });
+            }
+            let promesa = temporizador(1000); //lanzamos promesa de temporizador + el tiempo
+            promesa.then(() => { //como la hemos guardado en una variable podemos poner promesa.then
+                console.log("Ha finalizado el primer temporizador"); //OJO!!!!A THEN TIENES QUE METERLE UNA FUNCION.
+                return temporizador(1000); //como devolvemos otra promesa podemos poner añadir otro then al final.
+            }).then(() => {
+                console.log("Ha finalizado el segundo temporizador");
+                return temporizador(2000);
+            }).then(()=>{
+                console.log("Han finalizado los tres temporizadores");
+            }).catch(()=>{ //un catch tambien se añade igual
+                console.log("Ha habido un error");
+            }).finally(() => console.log("Todo ha terminado")); //finally tambien se añade al final
+        </script>
+    </body>
+</html>

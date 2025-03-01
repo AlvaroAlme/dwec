@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title></title>
+    </head>
+    <body>
+            <label for="nombreUsuario" type="text">Nombre: </label>
+            <input type="text" id="nombreUsuario">
+            <input type="button" value="Buscar" onclick="buscarUsuario()">
+
+        <div id="loginUsuario"></div>
+        <img id ="imagenUsuario" alt="imagen usuario" src="">
+        <script>
+            
+            function buscarUsuario(){
+                let usuario = document.getElementById("nombreUsuario").value;
+                fetch("https://api.github.com/users/"+usuario).then((resultadoFetch) => {
+                    return resultadoFetch.json();
+
+                }).then((resultadoJson) => {
+                    console.log(resultadoJson);
+                    document.getElementById("loginUsuario").innerHTML = resultadoJson.login;
+                    document.getElementById("imagenUsuario").src = resultadoJson.avatar_url;
+                }).catch((error) => {
+                    console.log("Error");
+                });
+            }
+
+
+        </script>
+    </body>
+</html>
