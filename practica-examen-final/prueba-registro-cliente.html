@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Formulario Cliente</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <h2>Registro de Cliente</h2>
+    <form id="clienteForm">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" required><br><br>
+        
+        <label for="saldo">Saldo Inicial:</label>
+        <input type="number" id="saldo" required><br><br>
+        
+        <button type="button" onclick="registrarCliente()">Registrar</button>
+    </form>
+    
+    <h3>Lista de Clientes</h3>
+    <table border="1" id="tablaClientes">
+        <tr>
+            <th>Nombre</th>
+            <th>Saldo</th>
+            <th>Acciones</th>
+        </tr>
+    </table>
+    
+    <h3>Operaciones</h3>
+    <label for="cantidad">Cantidad:</label>
+    <input type="number" id="cantidad"><br><br>
+    
+    <button type="button" onclick="depositar()">Depositar</button>
+    <button type="button" onclick="extraer()">Extraer</button>
+    
+    <script>
+        class Cliente {
+            constructor(nombre, saldo) {
+                this.nombre = nombre;
+                this.saldo = parseFloat(saldo);
+            }
+
+            depositar(dinero) {
+                this.saldo += parseFloat(dinero);
+            }
+
+            extraer(dinero) {
+                if (dinero > this.saldo) {
+                    alert('Saldo insuficiente');
+                } else {
+                    this.saldo -= parseFloat(dinero);
+                }
+            }
+        }
+
+        let clientes = [];
+        let clienteSeleccionado = null;
+
+        function registrarCliente() {
+            const nombre = document.getElementById('nombre').value;
+            const saldo = document.getElementById('saldo').value;
+            
+            if (nombre && saldo) {
+                let nuevoCliente = new Cliente(nombre, saldo);
+                clientes.push(nuevoCliente);
+                actualizarTabla();
+            }
+        }
+
+        function actualizarTabla() {
+            let tabla = document.getElementById('tablaClientes');
+            tabla.innerHTML = '<tr><th>Nombre</th><th>Saldo</th><th>Acciones</th></tr>';
+            
+            clientes.forEach((cliente, index) => {
+                let fila = tabla.insertRow();
+                fila.insertCell(0).innerText = cliente.nombre;
+                fila.insertCell(1).innerText = `$${cliente.saldo}`;
+                
+                let acciones = fila.insertCell(2);
+                let btnSeleccionar = document.createElement('button');
+                btnSeleccionar.innerText = 'Seleccionar';
+                btnSeleccionar.onclick = () => seleccionarCliente(index);
+                acciones.appendChild(btnSeleccionar);
+            });
+        }
+
+        function seleccionarCliente(index) {
+            clienteSeleccionado = clientes[index];
+            alert(`Cliente seleccionado: ${clienteSeleccionado.nombre}`);
+        }
+
+        function depositar() {
+            const cantidad = document.getElementById('cantidad').value;
+            if (clienteSeleccionado && cantidad) {
+                clienteSeleccionado.depositar(cantidad);
+                actualizarTabla();
+            }
+        }
+
+        function extraer() {
+            const cantidad = document.getElementById('cantidad').value;
+            if (clienteSeleccionado && cantidad) {
+                clienteSeleccionado.extraer(cantidad);
+                actualizarTabla();
+            }
+        }
+    </script>
+</body>
+
+</html>

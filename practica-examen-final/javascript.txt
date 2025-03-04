@@ -100,3 +100,264 @@ Cuando el control tome foco borrar el contenido actual. Mostrar en las propiedad
 </body>
 
 </html>
+
+Se tiene el siguiente vector con 3 objetos literales con los datos de personas. Imprimir el nombre y edad de las personas mayores de edad:
+
+        const personas = [{
+            nombre: 'juan',
+            edad: 45
+        }, {
+            nombre: 'ana',
+            edad: 12
+        }, {
+            nombre: 'luis',
+            edad: 16
+        }, {
+            nombre: 'cristina',
+            edad: 76
+        }];
+Luego el programa que recorre el array y accede a cada objeto almacenado mediante un for of:
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ejemplo de JavaScript</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+
+    <script>
+        const personas = [{
+            nombre: 'juan',
+            edad: 45
+        }, {
+            nombre: 'ana',
+            edad: 12
+        }, {
+            nombre: 'luis',
+            edad: 16
+        }, {
+            nombre: 'cristina',
+            edad: 76
+        }];
+
+        document.write('<h1>Personas mayores de edad.</h1>');
+        for (let persona of personas)
+            if (persona.edad >= 18)
+                document.write(`${persona.nombre} y tiene ${persona.edad} años.<br>`);
+    </script>
+
+</body>
+
+</html>
+
+Imprimir todos los elementos de un array y la posición que ocupa dentro del mismo:
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ejemplo de JavaScript</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+
+    <script>
+        const vector = [10, 40, 60, 5];
+        for (let [indice, valor] of vector.entries())
+            document.write(`${valor} ocupa la posición ${indice}<br>`);
+    </script>
+</body>
+
+</html>
+
+Confeccionar una clase Persona que tenga como atributos el nombre y la edad. Al constructor llegan los datos personales y en otro método se imprimen.
+Plantear una segunda clase Empleado que herede de la clase Persona. Añadir un atributo sueldo y los métodos constructor, imprimir y un método si debe pagar impuestos (sueldo mayor a 5000)
+
+Posteriormente definir un objeto de la clase Persona y llamar a sus métodos. También crear un objeto de la clase Empleado y llamar a sus métodos.
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ejemplo de JavaScript</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+
+    <script>
+        class Persona {
+            constructor(nombre, edad) {
+                this.nombre = nombre;
+                this.edad = edad;
+            }
+
+            imprimir() {
+                document.write(`Nombre: ${this.nombre}<br>`);
+                document.write(`Edad: ${this.edad}<br>`);
+            }
+        }
+
+        class Empleado extends Persona {
+            constructor(nombre, edad, sueldo) {
+                super(nombre, edad);
+                this.sueldo = sueldo;
+            }
+
+            imprimir() {
+                super.imprimir();
+                document.write(`Sueldo: ${this.sueldo}<br>`);
+            }
+
+            pagaImpuestos() {
+                if (this.sueldo > 5000)
+                    document.write(`${this.nombre} debe pagar impuestos<br>`);
+                else
+                    document.write(`${this.nombre} no debe pagar impuestos<br>`);
+            }
+        }
+
+
+        const persona1 = new Persona('Juan', 44);
+        persona1.imprimir();
+        document.write('<hr>');
+
+        const empleado1 = new Empleado('Juan', 44, 7000);
+        empleado1.imprimir();
+        empleado1.pagaImpuestos();
+    </script>
+
+</body>
+
+</html>
+
+formulario cliente depositar extraer dinero
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Formulario Cliente</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <h2>Registro de Cliente</h2>
+    <form id="clienteForm">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" required><br><br>
+        
+        <label for="saldo">Saldo Inicial:</label>
+        <input type="number" id="saldo" required><br><br>
+        
+        <button type="button" onclick="registrarCliente()">Registrar</button>
+    </form>
+    
+    <h3>Datos del Cliente</h3>
+    <p id="datosCliente"></p>
+    
+    <h3>Operaciones</h3>
+    <label for="cantidad">Cantidad:</label>
+    <input type="number" id="cantidad"><br><br>
+    
+    <button type="button" onclick="depositar()">Depositar</button>
+    <button type="button" onclick="extraer()">Extraer</button>
+    
+    <script>
+        class Cliente {
+            constructor(nombre, saldo) {
+                this.nombre = nombre;
+                this.saldo = parseFloat(saldo);
+            }
+
+            depositar(dinero) {
+                this.saldo += parseFloat(dinero);
+            }
+
+            extraer(dinero) {
+                if (dinero > this.saldo) {
+                    alert('Saldo insuficiente');
+                } else {
+                    this.saldo -= parseFloat(dinero);
+                }
+            }
+        }
+
+        let cliente;
+
+        function registrarCliente() {
+            const nombre = document.getElementById('nombre').value;
+            const saldo = document.getElementById('saldo').value;
+            
+            if (nombre && saldo) {
+                cliente = new Cliente(nombre, saldo);
+                mostrarDatos();
+            }
+        }
+
+        function mostrarDatos() {
+            document.getElementById('datosCliente').innerHTML = `Nombre: ${cliente.nombre} <br> Saldo: $${cliente.saldo}`;
+        }
+
+        function depositar() {
+            const cantidad = document.getElementById('cantidad').value;
+            if (cliente && cantidad) {
+                cliente.depositar(cantidad);
+                mostrarDatos();
+            }
+        }
+
+        function extraer() {
+            const cantidad = document.getElementById('cantidad').value;
+            if (cliente && cantidad) {
+                cliente.extraer(cantidad);
+                mostrarDatos();
+            }
+        }
+    </script>
+</body>
+
+</html>
+
+
+La siguiente página permite seleccionar un archivo y mediante 'fetch' enviar el archivo adjunto:
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ejemplo de JavaScript</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <p>Foto:<input type="file" id="foto" required></p>
+    <p><button type="button" id="boton1">Subir foto</button></p>
+    <p><img id="imagen"></p>
+
+    <script>
+        document.getElementById("boton1").addEventListener("click", () => agregar());
+
+
+        function agregar() {
+            let fd = new FormData();
+            fd.append("foto", document.getElementById("foto").files[0]);
+            fetch('subirfoto.php', {
+                method: 'POST',
+                body: fd
+            })
+                .then(response => response.json())
+                .then(datos => {
+                    if (datos.resultado == "Ok")
+                        document.getElementById("imagen").setAttribute("src", document.getElementById("foto").files[0].name);
+                })
+        }
+    </script>
+
+</body>
+
+</html>
