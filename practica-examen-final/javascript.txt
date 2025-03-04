@@ -1,0 +1,102 @@
+Mostrar en una página la fecha y la hora actual.
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ejemplo de JavaScript</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+
+    <script>
+        function mostrarFechaHora() {
+            let fecha;
+            fecha = new Date();
+            document.write('Hoy es ');
+            document.write(fecha.getDate() + '/');
+            document.write((fecha.getMonth() + 1) + '/');
+            document.write(fecha.getFullYear());
+            document.write('<br>');
+            document.write('Es la hora ');
+            document.write(fecha.getHours() + ':');
+            document.write(fecha.getMinutes() + ':');
+            document.write(fecha.getSeconds());
+        }
+
+        //Llamada a la función
+        mostrarFechaHora();
+    </script>
+
+</body>
+
+</html>
+
+Confeccionar un formulario que permita ingresar el nombre y edad de una persona:
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ejemplo de JavaScript</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+
+    <form>
+        <p>Ingrese su nombre:<input type="text" id="nombre"></p>
+        <p>Ingrese su edad:<input type="text" id="edad"></p>
+        <p><input type="button" value="Confirmar" onClick="mostrar()"></p>
+    </form>
+
+    <script>
+        function mostrar() {
+            let nombre = document.getElementById('nombre').value;
+            let edad = document.getElementById('edad').value;
+            alert('Nombre:' + nombre);
+            alert('Edad:' + edad);
+        }
+    </script>
+
+</body>
+
+</html>
+
+
+El evento onFocus se dispara cuando el objeto toma foco y el evento onBlur cuando el objeto pierde el foco.
+
+Ejemplo: Implementar un formulario que solicite la carga del nombre y la edad de una persona. 
+Cuando el control tome foco borrar el contenido actual. Mostrar en las propiedades value de los controles text los mensajes "nombre" y "mail" respectivamente.
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ejemplo de JavaScript</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+
+    <form>
+        <input type="text" id="nombre" onFocus="vaciar(this)" value="nombre"><br>
+        <input type="text" id="edad" onFocus="vaciar(this)" value="mail">
+        <br>
+        <input type="button" value="Confirmar">
+
+        <script>
+            function vaciar(control) {
+                control.value = '';
+            }
+
+            function verificarEntrada(control) {
+                alert('ingreso:' + control.value);
+            }
+        </script>
+
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,7 @@
+REACT:
+-el constructor sigue la misma estructura siempre:
+	constructor(props){
+		super(props);
+		this.state ={ ->// similar a propiedades del objeto en Java
+		}
+- para hacer cambios que te detecte automaticamente(ej en formularios que cambie automaticamente el campo) - 'onChange={(e)=>this.setState({*id del campo*:e.currentTarget.value})}

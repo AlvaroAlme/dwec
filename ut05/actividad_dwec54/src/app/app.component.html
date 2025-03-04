@@ -1,0 +1,26 @@
+<button (click)="cambiarModo()">{{esModoEdicion ? "Modo vista" : "Modo edicion"}}</button>
+
+
+<div *ngIf="!esModoEdicion">
+<fieldset>
+  <legend><strong> Datos </strong></legend>
+  <div >
+    <div>Nombre: {{nombre}}</div>
+    <div>Apellidos: {{apellidos}} </div>
+    <div>Imagen: <img alt="foto-alvaro" [src]="imagen" width="75px" height="75px" ></div>
+    <div>Edad: {{edad}}</div>
+  </div>
+</fieldset>
+</div>
+
+<div *ngIf="esModoEdicion">
+  <h2>Formulario</h2>
+  <label for="nombre">Nombre:</label>
+  <input type="text" id="nombre" [(ngModel)]="nombre"/><br>
+  <label for="Apellidos">Apellidos:</label>
+  <input type="text" id="Apellidos" [(ngModel)]="apellidos"/><br>
+  <label for="imagen">Imagen:</label>
+  <input type="text" id="imagen" [(ngModel)]="imagen"/><br>
+  <label for="Edad">Edad:</label>
+  <input type="number" id="Edad" [(ngModel)]="edad"/><br>
+</div>

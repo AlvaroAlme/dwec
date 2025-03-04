@@ -1,0 +1,21 @@
+<fieldset>
+  <legend><strong> Datos </strong></legend>
+  <div>
+    <div>Nombre: {{nombre}}</div>
+    <div>Apellidos: {{apellidos}}</div>
+    <div>Imagen: <img [src]="imagen" alt="foto-alvaro"></div>
+    <div>Edad: </div>
+  </div>
+</fieldset>
+
+<div>
+  <h2>Formulario</h2>
+  <label for="nombre">Nombre:</label>
+  <input type="text" id="nombre" [(ngModel)]="nombre"/><br>
+  <label for="Apellidos">Apellidos:</label>
+  <input type="text" id="Apellidos" [(ngModel)]="apellidos"/><br>
+  <label for="imagen">Imagen:</label>
+  <input type="text" id="imagen" [(ngModel)]="imagen"/><br>
+  <label for="Edad">Edad:</label>
+  <input type="number" id="edad" [(ngModel)]="edad"/><br>
+</div>
