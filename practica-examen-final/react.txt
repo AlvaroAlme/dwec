@@ -1,0 +1,180 @@
+Confeccionar una aplicación que permita administrar un vector de objetos que almacena en cada elemento el código, 
+descripción y precio de un artículo. 
+Se debe poder agregar, borrar y modificar los datos de un artículo.
+
+IMPORTANTE PARA CREAR UN PROYECTO EN REACT:
+desde el mismo terminal de vscode (COMMAND PROMPT)
+-instalamos vite y creamos la carpeta (npm create vite@latest *nombre-proyecto* --template react)
+-indicamos que trabajaremos con react y css en el caso que lo pida
+-nos movemos a la carpeta *nombre-proyecto* (cd *nombre-proyecto*)
+-instalamos npm (npm install)
+-ejecutamos el servidor para poder ver los cambios (npm run dev)
+
+***EVENTOS EN REACT***
+onClick
+onDoubleClick
+onMouseEnter
+onMouseLeave
+onMouseMove
+onKeyPress
+onKetUp
+onSubmit
+
+EJEMPLO DE EVENTO:
+1.- Disponer dos controles de formulario HTML input="number" y un botón. 
+Al presionar el botón mostrar en un alert su suma.
+
+import logo from './logo.svg';
+import './App.css';
+
+function App() {
+  return (
+    <div>
+      <form onSubmit={presion}>
+        <p>Ingrese primer valor:
+          <input type="number" name="valor1" />
+        </p>
+        <p>Ingrese segundo valor:
+          <input type="number" name="valor2" />
+        </p>
+        <p>
+          <input type="submit" value="Sumar" />
+        </p>
+      </form>
+    </div>
+  );
+}
+
+function presion(e) {
+  e.preventDefault();
+  const v1=parseInt(e.target.valor1.value, 10);
+  const v2=parseInt(e.target.valor2.value, 10);
+  const suma=v1+v2;
+  alert('La suma es:'+suma);
+}
+
+export default App;
+
+2.- Definir en la interfaz visual un botón que cada vez que se presione se actualice en pantalla un número aleatorio entre 0 y 9.
+
+import { useState } from "react";
+
+function App() {
+
+  function generarAleatorio() {
+    const v = Math.trunc(Math.random() * 10);
+    setNumero(v)
+  }
+
+  const [numero, setNumero] = useState(0);
+
+  return (
+    <div>
+      <p>Número aleatorio: {numero}</p>
+      <button onClick={generarAleatorio}>Generar número aleatorio</button>
+    </div>
+  );
+}
+
+export default App;
+
+Añades todo en el archivo App.jsx
+------------------------------------------
+import { useState } from 'react';
+
+const App = () => {
+  // Estado con lista de artículos
+  const [articulos, setArticulos] = useState([
+    { id: 1, codigo: 'A001', descripcion: 'Laptop', precio: 1200 },
+    { id: 2, codigo: 'A002', descripcion: 'Mouse', precio: 25 },
+  ]);
+
+  const [codigo, setCodigo] = useState('');
+  const [descripcion, setDescripcion] = useState('');
+  const [precio, setPrecio] = useState('');
+  const [editando, setEditando] = useState(false);
+  const [idEditando, setIdEditando] = useState(null);
+
+  // Función para agregar o actualizar artículo
+  const manejarSubmit = (e) => {
+    e.preventDefault();
+
+
+    if (editando) {
+      // Modificar artículo existente
+      setArticulos(
+        articulos.map((articulo) =>
+          articulo.id === idEditando
+            ? { id: idEditando, codigo, descripcion, precio: Number(precio) }
+            : articulo
+        )
+      );
+      setEditando(false);
+      setIdEditando(null);
+    } else {
+      // Agregar nuevo artículo
+      setArticulos([
+        ...articulos,
+        { id: Date.now(), codigo, descripcion, precio: Number(precio) },
+      ]);
+    }
+
+    setCodigo('');
+    setDescripcion('');
+    setPrecio('');
+  };
+
+  // Función para eliminar artículo
+  const eliminarArticulo = (id) => {
+    setArticulos(articulos.filter((articulo) => articulo.id !== id));
+  };
+
+  // Función para cargar datos en el formulario para editar
+  const editarArticulo = (articulo) => {
+    setCodigo(articulo.codigo);
+    setDescripcion(articulo.descripcion);
+    setPrecio(articulo.precio);
+    setEditando(true);
+    setIdEditando(articulo.id);
+  };
+
+  return (
+    <div style={{ padding: '20px', maxWidth: '500px', margin: 'auto' }}>
+      <h2>{editando ? 'Editar' : 'Agregar'} Artículo</h2>
+      <form onSubmit={manejarSubmit}>
+        <input
+          type="text"
+          placeholder="Código"
+          value={codigo}
+          onChange={(e) => setCodigo(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Descripción"
+          value={descripcion}
+          onChange={(e) => setDescripcion(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Precio"
+          value={precio}
+          onChange={(e) => setPrecio(e.target.value)}
+        />
+        <button type="submit">{editando ? 'Actualizar' : 'Agregar'}</button>
+      </form>
+
+      <h2>Lista de Artículos</h2>
+      <ul>
+        {articulos.map((articulo) => (
+          <li key={articulo.id}>
+            {articulo.codigo} - {articulo.descripcion} - ${articulo.precio}
+            <button onClick={() => editarArticulo(articulo)}>✏️</button>
+            <button onClick={() => eliminarArticulo(articulo.id)}>🗑️</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default App;

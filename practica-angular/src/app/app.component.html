@@ -1,0 +1,17 @@
+<title>{{nombre}}</title>
+<div>
+  <p>Nombre del empleado: {{nombre}}</p>
+  <p>Edad: {{edad}}</p>
+  <p *ngIf="edad>=18">Es mayor de edad.</p>
+  <table border="1">
+    <tr>
+      <td>Sueldos</td>
+    </tr>
+    <tr *ngFor="let sueldo of sueldos">
+      <td>{{sueldo}}</td>
+    </tr>
+  </table>
+  <p>Ultimos 3 sueldos: {{sueldos[0]}}, {{sueldos[1]}}, {{sueldos[2]}}</p>
+  <p>Global sueldos: {{ultimos3Sueldos()}}</p>
+  <p>{{estaActivo()}}</p>
+</div>

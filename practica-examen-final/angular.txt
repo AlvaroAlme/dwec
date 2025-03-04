@@ -1,0 +1,186 @@
+npm install -g @angular/cli //para instalar angular
+ng new *nombre-programa* //crear proyecto
+ng serve // inicializar proyecto y poder verlo en directo
+ng serve --open //abre el navegador directamente
+ng build //para "montar" el programa una vez terminado
+
+puedes añadir url a la clase: sitio = 'www....'
+puedes añadir una url a la propiedad del elemento: <p>Puede visitar el sitio ingresando <a href="{{sitio}}">aquí</a></p>
+
+*ngIf para condiciones 
+para incluir un else lo podemos hacer asi:
+    <p *ngIf="edad>=18; else menor">Es mayor de edad.</p>
+    <ng-template #menor><p>Es un menor de edad.</p></ng-template>
+
+*ngFor permite generar muchos elementos HTL repetidos a partir del recorrido de un arreglo de datos
+
+
+CAPTURAR EVENTO: PRESION DE UN BOTON->
+    --EN APP.COMPONENT.TS--
+    import {Component} from '@angular/core'
+
+    @Component({
+        selector: 'app-root',
+        templateUrl: './app.component.html',
+        styleUrls: ['./app.component.css']
+    })
+
+    export class AppComponent {
+        contador = 1;
+      
+        sumar() {
+          this.contador++;
+        }
+      
+        restar() {
+          this.contador--;
+        }
+      
+      }
+
+    ---EN EL HTML---
+    <div>
+        <p>{{contador}}</p>
+        <button (click)="incrementar()">Sumar 1</button>
+        <button (click)="decrementar()">Restar 1</button>
+      </div>
+
+
+    
+*ngModel enlace entre una propiedad de nuestra clase y el valor de un formulario
+
+importamos FormModule en app.component.ts
+
+inicializamos vacia la clase AppComponent
+    export class AppComponent {
+        nombre='';
+        apellido='';
+    }
+
+en .html definimos la directiva ngModel para cada control:
+
+<div>
+    <p>Ingrese nombre<input type="text" [(ngModel)]="nombre"></p>
+    <p>Ingrese apellido<input type="text" [(ngModel)]="apellido"></p>  
+    <p>Nombre completo:{{nombre}},{{apellido}}</p>
+  </div>
+
+
+
+
+Ejercicio practico:
+
+Confeccionar una aplicación que permita administrar un vector de objetos que almacena en cada elemento el código, 
+descripción y precio de un artículo. 
+Se debe poder agregar, borrar y modificar los datos de un artículo.
+
+----Como trabajaremos con un formulario donde el operador ingresará el código, 
+descripción y precio de productos lo más conveniente es enlazar los controles 'input' mediante la directiva 'ngModel'. 
+Debemos entonces importar la clase 'FormsModule' en el archivo 'app.component.ts':------
+
+1.-En el archivo app.component.html implementamos:
+
+<div>
+  <h1>Administración de artículos</h1>
+    <table border="1" *ngIf="hayRegistros(); else sinarticulos">
+      <tr>
+        <td>Codigo</td><td>Descripcion</td><td>Precio</td><td>Borrar</td><td>Seleccionar</td>
+      </tr>
+      <tr *ngFor="let art of articulos">
+        <td>{{art.codigo}}</td>
+        <td>{{art.descripcion}}</td>
+        <td>{{art.precio}}</td>
+        <td><button (click)="borrar(art.codigo)">Borrar?</button></td>
+        <td><button (click)="seleccionar(art)">Seleccionar</button></td>        
+      </tr>
+    </table>
+    <ng-template #sinarticulos><p>No hay articulos.</p></ng-template>
+    <div>
+      <p>
+        Codigo:<input type="number" [(ngModel)]="art.codigo" />
+      </p>
+      <p>
+        descripcion:<input type="text" [(ngModel)]="art.descripcion" />
+      </p>
+      <p>
+        precio:<input type="number" [(ngModel)]="art.precio" />
+      </p>            
+      <p><button (click)="agregar()">Agregar</button>
+      <button (click)="modificar()">Modificar</button></p>
+    </div>
+</div>
+
+
+
+2.- La clase app.component.ts es asi:
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  
+  art={
+    codigo:0 ,
+    descripcion:"",
+    precio:0
+  }
+
+  articulos = [{codigo:1, descripcion:'papas', precio:10.55},
+               {codigo:2, descripcion:'manzanas', precio:12.10},
+               {codigo:3, descripcion:'melon', precio:52.30},
+               {codigo:4, descripcion:'cebollas', precio:17},
+               {codigo:5, descripcion:'calabaza', precio:20},
+              ];
+
+  hayRegistros() {
+    return this.articulos.length>0;              
+  }
+
+  borrar(codigo:number) {
+    for(let x=0;x<this.articulos.length;x++)
+      if (this.articulos[x].codigo==codigo)
+      {
+        this.articulos.splice(x,1);
+        return;
+      }
+  }
+
+  agregar() {
+    if (this.art.codigo==0) {
+      alert('Debe ingresar un código de articulo distinto a cero');
+      return;
+    }
+    for(let x=0;x<this.articulos.length;x++)
+    if (this.articulos[x].codigo==this.art.codigo)
+    {
+      alert('ya existe un articulo con dicho codigo');
+      return;
+    }        
+    this.articulos.push({codigo:this.art.codigo,
+                         descripcion:this.art.descripcion,
+                         precio:this.art.precio });
+    this.art.codigo=0;
+    this.art.descripcion="";	
+    this.art.precio=0;    
+  }
+
+  seleccionar(art: { codigo: number; descripcion: string; precio: number; }) {
+    this.art.codigo=art.codigo;
+    this.art.descripcion=art.descripcion;
+    this.art.precio=art.precio;
+  }
+
+  modificar() {
+    for(let x=0;x<this.articulos.length;x++)
+      if (this.articulos[x].codigo==this.art.codigo)
+      {
+        this.articulos[x].descripcion=this.art.descripcion;
+        this.articulos[x].precio=this.art.precio;
+        return;
+      }        
+    alert('No existe el código de articulo ingresado');
+  }
+}
